@@ -56,7 +56,7 @@ bot.text(function (msg, reply, next) {
   }
   url = url.substring(url.indexOf('http'));
   console.log(url)
-  if (url.substring(url.indexOf(' ')).lastIndexOf('-n') != -1) {
+  if (url.substring(url.indexOf(' ')).lastIndexOf('-n ') != -1) {
 
 
     var name = url.substring(url.lastIndexOf('-n') + 2);
@@ -205,7 +205,9 @@ console.log(name.indexOf('"'))
                 reply.text(sentences[3][i])
                 var photo = fs.createReadStream(name + '.png')
 
-                reply.action('upload_photo').photo(photo)
+                reply.action('upload_photo').photo(photo);
+                // reply.action('upload_document').document(photo)
+                
               } catch (e) {
                 reply.text("agha axesh dar nmiad😑")
               }
