@@ -171,7 +171,7 @@ bot.text(function (msg, reply, next) {
           });
 
         });
-      },15000);
+      },5000);
 
       });
     });
