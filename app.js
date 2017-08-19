@@ -189,8 +189,8 @@ console.log(name.indexOf('"'))
             
            var keywords = extract(content);
            console.log(keywords)
-           for(var i=0;i<keywords.length;i++){
-             keywordstext+='#'+keywords[i]+' ';
+           for(var j=0;j<keywords.length;j++){
+             keywordstext+='#'+keywords[j]+' ';
            }
             });
           var i = Math.floor((Math.random() * (sentences[1].length - 1)) + 0);

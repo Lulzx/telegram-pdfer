@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "auto-keywords": "0.0.2",
     "body-parser": "~1.17.1",
     "botgram": "^2.0.1",
     "clipping": "^0.1.9",
