@@ -132,7 +132,7 @@ bot.text(function (msg, reply, next) {
       });
       console.log('sen[0]['+i+'] > ',sentences[0][i])
       reply.text(sentences[0][i])
-      page.open(msg.text).then(function (status) {
+      page.open(url).then(function (status) {
         setTimeout(function(){
         var i=Math.floor((Math.random() * (sentences[1].length-1)) + 0);
         console.log('sen[1]['+i+'] > ',sentences[1][i])
@@ -164,7 +164,7 @@ bot.text(function (msg, reply, next) {
           });
 
         });
-      },3000);
+      },5000);
 
       });
     });
