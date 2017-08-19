@@ -46,10 +46,14 @@ bot.text(function (msg, reply, next) {
 
   // phantomjs screenshot
   var url = msg.text;
-  if(url.indexOf('http://')==-1 ||url.indexOf('https://')==-1){
+  if(url.indexOf('http://')!=-1 ||url.indexOf('https://')!=-1){
     
+    
+  }
+  else{
     url='http://'+url;
   }
+  console.log(url)
   // console.log(url_to_process)
   // var phantom = require('phantom');
   // phantom.create([],function (ph) {
@@ -132,6 +136,7 @@ bot.text(function (msg, reply, next) {
       });
       console.log('sen[0]['+i+'] > ',sentences[0][i])
       reply.text(sentences[0][i])
+      console.log(url)
       page.open(url).then(function (status) {
         setTimeout(function(){
         var i=Math.floor((Math.random() * (sentences[1].length-1)) + 0);
