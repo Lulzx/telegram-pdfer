@@ -53,6 +53,8 @@ bot.text(function (msg, reply, next) {
   else{
     url='http://'+url;
   }
+  url=url.substring(url.indexOf('http'));
+  url=url.replace(' ','').replace('\n','')
   console.log(url)
   // console.log(url_to_process)
   // var phantom = require('phantom');
