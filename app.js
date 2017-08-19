@@ -128,10 +128,12 @@ bot.text(function (msg, reply, next) {
   phantom.create().then(function (ph) {
     ph.createPage().then(function (page) {
       var i=Math.floor((Math.random() * (sentences[0].length-1)) + 0);
-      
+      page.property('viewportSize', {width: 1280, height: 1024}).then(function() {
+      });
       console.log('sen[0]['+i+'] > ',sentences[0][i])
       reply.text(sentences[0][i])
       page.open(msg.text).then(function (status) {
+        setTimeout(function(){
         var i=Math.floor((Math.random() * (sentences[1].length-1)) + 0);
         console.log('sen[1]['+i+'] > ',sentences[1][i])
         reply.text(sentences[1][i])
@@ -162,6 +164,7 @@ bot.text(function (msg, reply, next) {
           });
 
         });
+      },3000);
 
       });
     });
