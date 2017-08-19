@@ -1,0 +1,30 @@
+{
+  "name": "telegram-pdfer",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "~1.17.1",
+    "botgram": "^2.0.1",
+    "clipping": "^0.1.9",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.3",
+    "express": "~4.15.2",
+    "html-pdf": "^2.1.0",
+    "html-to-text": "^3.3.0",
+    "lodash-node": "^2.4.1",
+    "morgan": "~1.8.1",
+    "node-summary": "^1.1.0",
+    "nodepdf": "^1.3.2",
+    "pdfkitjs": "0.0.5",
+    "phantom": "^4.0.5",
+    "phantomjs-prebuilt": "^2.1.15",
+    "pug": "~2.0.0-beta11",
+    "scrape-it": "^3.3.2",
+    "serve-favicon": "~2.4.2",
+    "webpage": "^0.3.0",
+    "webshot": "^0.18.0"
+  }
+}
