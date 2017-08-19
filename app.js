@@ -46,15 +46,51 @@ bot.text(function (msg, reply, next) {
 
   // phantomjs screenshot
   var url = msg.text;
-  if(url.indexOf('http://')!=-1 ||url.indexOf('https://')!=-1){
-    
-    
+  var fname;
+
+  if (url.indexOf('http://') != -1 || url.indexOf('https://') != -1) {
+
+
+  } else {
+    url = 'http://' + url;
   }
-  else{
-    url='http://'+url;
+  url = url.substring(url.indexOf('http'));
+  console.log(url)
+  if (url.substring(url.indexOf(' ')).lastIndexOf('-n') != -1) {
+
+
+    var name = url.substring(url.lastIndexOf('-n') + 2);
+console.log('1 >',name);
+console.log(name.indexOf('"'))
+    name = name.substring(name.indexOf('"',0)+1);
+    name=name.substring(0,name.indexOf('"'));
+    console.log('2 >',name)
+    fname = name;
+    url=url.substring(0, url.lastIndexOf('-n'));
+    console.log(url)
+
+  } else {
+    if (url.indexOf('http://') != -1) {
+      fname=url.substring(url.indexOf('http://')+7);
+      if (fname.indexOf('/') != -1)
+        fname=fname.substring(0,fname.indexOf('/'));
+      
+    }
+    else if(url.indexOf('https://') != -1){
+      fname=url.substring(url.indexOf('https://')+8);
+      if (fname.indexOf('/') != -1)
+        fname=fname.substring(0,fname.indexOf('/'));
+      
+    }
+    else{
+      if (url.indexOf('/') == -1)
+        fname = url;
+      else {
+        fname = url.substring(0, url.indexOf('/'))
+      }
+    }
   }
-  url=url.substring(url.indexOf('http'));
-  url=url.replace(' ','').replace('\n','')
+  url = url.replace(' ', '').replace('\n', '')
   console.log(url)
   // console.log(url_to_process)
   // var phantom = require('phantom');
@@ -130,48 +166,54 @@ bot.text(function (msg, reply, next) {
   ]
   var phantom = require('phantom');
   var fs = require('fs');
-  var name = path.join(__dirname, 'public/files/'+Date.now());
+
+  fs.mkdir(path.join(__dirname, 'public/files/' + Date.now()))
+  var name = path.join(__dirname, 'public/files/' + Date.now() + '/' + fname);
   phantom.create().then(function (ph) {
     ph.createPage().then(function (page) {
-      var i=Math.floor((Math.random() * (sentences[0].length-1)) + 0);
-      page.property('viewportSize', {width: 1280, height: 1024}).then(function() {
-      });
-      console.log('sen[0]['+i+'] > ',sentences[0][i])
+      var i = Math.floor((Math.random() * (sentences[0].length - 1)) + 0);
+      page.property('viewportSize', {
+        width: 1280,
+        height: 1024
+      }).then(function () {});
+      console.log('sen[0][' + i + '] > ', sentences[0][i])
       reply.text(sentences[0][i])
       console.log(url)
       page.open(url).then(function (status) {
-        setTimeout(function(){
-        var i=Math.floor((Math.random() * (sentences[1].length-1)) + 0);
-        console.log('sen[1]['+i+'] > ',sentences[1][i])
-        reply.text(sentences[1][i])
-        page.render(name + '.pdf').then(function () {
-          console.log('Page Rendered');
-          try {
-            var i=Math.floor((Math.random() * (sentences[2].length-1)) + 0);
-            console.log('sen[2]['+i+'] > ',sentences[2][i])
-            reply.text(sentences[2][i])
-            
-            reply.action('upload_document').document(fs.createReadStream(name + '.pdf'))
-          } catch (e) {
-            reply.text("agha pdfesh dar nmiad😑")
-          }
-          page.render(name + '.png').then(function () {
+        setTimeout(function () {
+          var i = Math.floor((Math.random() * (sentences[1].length - 1)) + 0);
+          console.log('sen[1][' + i + '] > ', sentences[1][i])
+          reply.text(sentences[1][i])
+          page.render(name + '.pdf').then(function () {
             console.log('Page Rendered');
             try {
-              var i=Math.floor((Math.random() * (sentences[3].length-1)) + 0);
-              console.log('sen[3]['+i+'] > ',sentences[3][i])
-              reply.text(sentences[3][i])
-              var photo = fs.createReadStream(name + '.png')
-              
-              reply.action('upload_photo').photo(photo)
+              var i = Math.floor((Math.random() * (sentences[2].length - 1)) + 0);
+              console.log('sen[2][' + i + '] > ', sentences[2][i])
+              reply.text(sentences[2][i])
+              var doc = fs.createReadStream(name + '.pdf');
+              // console.log(doc)
+              // doc.path=doc.path.replace(name,'guzu')
+              reply.action('upload_document').document(doc)
             } catch (e) {
-              reply.text("agha axesh dar nmiad😑")
+              reply.text("agha pdfesh dar nmiad😑")
             }
-            ph.exit();
-          });
+            page.render(name + '.png').then(function () {
+              console.log('Page Rendered');
+              try {
+                var i = Math.floor((Math.random() * (sentences[3].length - 1)) + 0);
+                console.log('sen[3][' + i + '] > ', sentences[3][i])
+                reply.text(sentences[3][i])
+                var photo = fs.createReadStream(name + '.png')
 
-        });
-      },5000);
+                reply.action('upload_photo').photo(photo)
+              } catch (e) {
+                reply.text("agha axesh dar nmiad😑")
+              }
+              ph.exit();
+            });
+
+          });
+        }, 5000);
 
       });
     });
