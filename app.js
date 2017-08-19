@@ -15,7 +15,7 @@ var bot = botgram(token);
 
 bot.command("start", function (msg, reply, next) {
   console.log("Received a /start command from", msg.from.username);
-  reply.text('یه لینک بده تا بت بدم');
+  reply.text('یه لینک بده تا درستش کنم:/ اعصاب هم ندارم');
 });
 bot.text(function (msg, reply, next) {
   // var phantom = require('phantom');
@@ -181,6 +181,18 @@ console.log(name.indexOf('"'))
       console.log(url)
       page.open(url).then(function (status) {
         setTimeout(function () {
+          var keywordstext='';
+          
+          page.property('plainText').then(function(content) {
+            console.log(content);
+            var extract = require('auto-keywords');
+            
+           var keywords = extract(content);
+           console.log(keywords)
+           for(var i=0;i<keywords.length;i++){
+             keywordstext+='#'+keywords[i]+' ';
+           }
+            });
           var i = Math.floor((Math.random() * (sentences[1].length - 1)) + 0);
           console.log('sen[1][' + i + '] > ', sentences[1][i])
           reply.text(sentences[1][i])
@@ -193,7 +205,8 @@ console.log(name.indexOf('"'))
               var doc = fs.createReadStream(name + '.pdf');
               // console.log(doc)
               // doc.path=doc.path.replace(name,'guzu')
-              reply.action('upload_document').document(doc)
+              console.log(keywordstext)
+              reply.action('upload_document').document(doc,'🍓 '+url+'\n🍐'+keywordstext)
             } catch (e) {
               reply.text("agha pdfesh dar nmiad😑")
             }
@@ -205,7 +218,7 @@ console.log(name.indexOf('"'))
                 reply.text(sentences[3][i])
                 var photo = fs.createReadStream(name + '.png')
 
-                reply.action('upload_photo').photo(photo);
+                reply.action('upload_photo').photo(photo,'🍓 '+url+'\n🍐'+keywordstext);
                 // reply.action('upload_document').document(photo)
                 
               } catch (e) {
